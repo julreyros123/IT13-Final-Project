@@ -68,6 +68,7 @@ namespace IT13_Final_Project
             linkLabel2.TabIndex = 3;
             linkLabel2.TabStop = true;
             linkLabel2.Text = "Go to Signup";
+            linkLabel2.LinkClicked += linkLabel2_LinkClicked_1;
             // 
             // panel1
             // 
@@ -141,6 +142,7 @@ namespace IT13_Final_Project
             label3.Size = new Size(192, 15);
             label3.TabIndex = 6;
             label3.Text = "_____________________________________";
+            label3.Click += label3_Click;
             // 
             // label2
             // 
