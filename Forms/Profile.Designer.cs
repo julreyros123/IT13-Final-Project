@@ -31,7 +31,7 @@
             panel2 = new Panel();
             label2 = new Label();
             panel1 = new Panel();
-            button2 = new Button();
+            Logoutbtn = new Button();
             button1 = new Button();
             panel4 = new Panel();
             label20 = new Label();
@@ -84,7 +84,7 @@
             // panel1
             // 
             panel1.BackColor = Color.SandyBrown;
-            panel1.Controls.Add(button2);
+            panel1.Controls.Add(Logoutbtn);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(panel4);
             panel1.Controls.Add(panel3);
@@ -93,14 +93,15 @@
             panel1.Size = new Size(668, 604);
             panel1.TabIndex = 4;
             // 
-            // button2
+            // Logoutbtn
             // 
-            button2.Location = new Point(399, 555);
-            button2.Name = "button2";
-            button2.Size = new Size(85, 30);
-            button2.TabIndex = 3;
-            button2.Text = "Logout";
-            button2.UseVisualStyleBackColor = true;
+            Logoutbtn.Location = new Point(399, 555);
+            Logoutbtn.Name = "Logoutbtn";
+            Logoutbtn.Size = new Size(85, 30);
+            Logoutbtn.TabIndex = 3;
+            Logoutbtn.Text = "Logout";
+            Logoutbtn.UseVisualStyleBackColor = true;
+            Logoutbtn.Click += button2_Click;
             // 
             // button1
             // 
@@ -373,7 +374,7 @@
         private Label label17;
         private Label label16;
         private Label label15;
-        private Button button2;
+        private Button Logoutbtn;
         private Button button1;
         private Label label20;
         private Label label19;
