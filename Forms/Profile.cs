@@ -21,5 +21,12 @@ namespace IT13_Final_Project.Forms
         {
 
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Login LoginForm = new Login();
+            this.Hide();
+            LoginForm.Show();
+        }
     }
 }
