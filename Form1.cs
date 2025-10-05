@@ -30,7 +30,7 @@ namespace IT13_Final_Project
         private void SignupBtn_Click(object sender, EventArgs e)
         {
             string username = UserTb.Text;
-            string password = passregTB.Text;  // In production, hash this! (e.g., using BCrypt or SHA256)
+            string password = PasswordTb.Text;  // In production, hash this! (e.g., using BCrypt or SHA256)
             string email = EmailTb.Text;
 
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(email))
@@ -56,10 +56,9 @@ namespace IT13_Final_Project
                         if (rowsAffected > 0)
                         {
                             MessageBox.Show("Registration successful!");
-                            // Optionally call library method here if needed
-                            // Helper helper = new Helper();
-                            // string message = helper.GetMessage();
-                            // MessageBox.Show(message);
+                            Login login = new Login();
+                            login.Show();
+                            this.Hide();
                         }
                         else
                         {

@@ -1,4 +1,6 @@
-﻿namespace IT13_Final_Project.Forms
+﻿
+
+namespace IT13_Final_Project.Forms
 {
     partial class BorrowedBooks
     {
@@ -67,7 +69,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Microsoft New Tai Lue", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.FromArgb(128, 64, 0);
-            label2.Location = new Point(671, 22);
+            label2.Location = new Point(515, 23);
             label2.Name = "label2";
             label2.Size = new Size(266, 35);
             label2.TabIndex = 0;
@@ -78,7 +80,7 @@
             panel3.BackColor = SystemColors.ControlDark;
             panel3.Controls.Add(Amountbl);
             panel3.Controls.Add(label3);
-            panel3.Location = new Point(602, 105);
+            panel3.Location = new Point(418, 105);
             panel3.Name = "panel3";
             panel3.Size = new Size(437, 70);
             panel3.TabIndex = 5;
@@ -107,12 +109,13 @@
             // 
             // panel4
             // 
+            panel4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel4.BackColor = Color.Chocolate;
             panel4.Controls.Add(panel5);
             panel4.Controls.Add(label4);
-            panel4.Location = new Point(303, 215);
+            panel4.Location = new Point(163, 205);
             panel4.Name = "panel4";
-            panel4.Size = new Size(954, 233);
+            panel4.Size = new Size(983, 520);
             panel4.TabIndex = 6;
             // 
             // panel5
@@ -237,11 +240,13 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1324, 450);
+            ClientSize = new Size(1324, 737);
             Controls.Add(panel4);
             Controls.Add(panel3);
             Controls.Add(panel2);
             Name = "BorrowedBooks";
+            WindowState = FormWindowState.Maximized;
+            Load += BorrowedBooks_Load;
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             panel3.ResumeLayout(false);
@@ -254,6 +259,7 @@
             panel6.PerformLayout();
             ResumeLayout(false);
         }
+
 
         #endregion
         private Panel panel2;

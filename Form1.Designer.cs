@@ -168,6 +168,7 @@
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Sign Up";
+            WindowState = FormWindowState.Maximized;
             Load += Form1_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
