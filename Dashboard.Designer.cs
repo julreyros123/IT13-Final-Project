@@ -183,11 +183,11 @@
             // 
             // panel6
             // 
-            panel6.BackColor = Color.Gray;
+            panel6.BackColor = Color.WhiteSmoke;
             panel6.Dock = DockStyle.Fill;
-            panel6.Location = new Point(0, 0);
+            panel6.Location = new Point(194, 0);
             panel6.Name = "panel6";
-            panel6.Size = new Size(984, 749);
+            panel6.Size = new Size(790, 749);
             panel6.TabIndex = 7;
             // 
             // Dashboard
@@ -197,12 +197,13 @@
             BackColor = Color.White;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(984, 749);
-            Controls.Add(panel1);
             Controls.Add(panel6);
+            Controls.Add(panel1);
             Name = "Dashboard";
             SizeGripStyle = SizeGripStyle.Hide;
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "b";
+            Text = "Dashboard";
+            WindowState = FormWindowState.Maximized;
             Load += Dashboard_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();

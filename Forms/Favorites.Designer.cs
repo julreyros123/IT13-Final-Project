@@ -49,7 +49,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Microsoft New Tai Lue", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.FromArgb(128, 64, 0);
-            label2.Location = new Point(642, 21);
+            label2.Location = new Point(528, 22);
             label2.Name = "label2";
             label2.Size = new Size(158, 35);
             label2.TabIndex = 0;
@@ -57,8 +57,9 @@
             // 
             // flowLayoutPanel1
             // 
+            flowLayoutPanel1.Anchor = AnchorStyles.Left;
             flowLayoutPanel1.BackColor = Color.Chocolate;
-            flowLayoutPanel1.Location = new Point(409, 155);
+            flowLayoutPanel1.Location = new Point(241, 152);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(728, 137);
             flowLayoutPanel1.TabIndex = 4;
@@ -72,6 +73,8 @@
             Controls.Add(panel2);
             Name = "Favorites";
             Text = "Favorites";
+            WindowState = FormWindowState.Maximized;
+            Load += Favorites_Load;
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ResumeLayout(false);

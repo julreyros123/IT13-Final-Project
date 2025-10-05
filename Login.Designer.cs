@@ -1,5 +1,4 @@
-﻿
-namespace IT13_Final_Project
+﻿namespace IT13_Final_Project
 {
     partial class Login
     {
@@ -28,6 +27,7 @@ namespace IT13_Final_Project
             label2 = new Label();
             label1 = new Label();
             SignInBtn = new Button();
+            AdminAccessBtn = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -68,7 +68,7 @@ namespace IT13_Final_Project
             linkLabel2.TabIndex = 3;
             linkLabel2.TabStop = true;
             linkLabel2.Text = "Go to Signup";
-            linkLabel2.LinkClicked += linkLabel2_LinkClicked_1;
+            linkLabel2.LinkClicked += linkLabel2_LinkClicked;
             // 
             // panel1
             // 
@@ -98,6 +98,7 @@ namespace IT13_Final_Project
             pictureBox1.Size = new Size(162, 94);
             pictureBox1.TabIndex = 11;
             pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
             // 
             // label5
             // 
@@ -142,7 +143,6 @@ namespace IT13_Final_Project
             label3.Size = new Size(192, 15);
             label3.TabIndex = 6;
             label3.Text = "_____________________________________";
-            label3.Click += label3_Click;
             // 
             // label2
             // 
@@ -182,23 +182,44 @@ namespace IT13_Final_Project
             SignInBtn.UseVisualStyleBackColor = false;
             SignInBtn.Click += SignInBtn_Click;
             // 
+            // AdminAccessBtn
+            // 
+            AdminAccessBtn.BackColor = Color.FromArgb(20, 255, 224, 192);
+            AdminAccessBtn.FlatAppearance.BorderSize = 0;
+            AdminAccessBtn.FlatStyle = FlatStyle.Flat;
+            AdminAccessBtn.Location = new Point(944, 10);
+            AdminAccessBtn.Name = "AdminAccessBtn";
+            AdminAccessBtn.Size = new Size(30, 30);
+            AdminAccessBtn.TabIndex = 7;
+            AdminAccessBtn.UseVisualStyleBackColor = false;
+            AdminAccessBtn.Click += AdminAccessBtn_Click;
+            // 
             // Login
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 224, 192);
             ClientSize = new Size(984, 536);
+            Controls.Add(AdminAccessBtn);
             Controls.Add(panel1);
             ForeColor = Color.Black;
             Location = new Point(358, 47);
             Name = "Login";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Login";
+            WindowState = FormWindowState.Maximized;
+            Load += Login_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
 
         private System.Windows.Forms.TextBox LoginUserTb;
         private System.Windows.Forms.TextBox LoginPasswordTb;
@@ -213,5 +234,6 @@ namespace IT13_Final_Project
         private CheckBox RemCb;
         private Label label5;
         private PictureBox pictureBox1;
+        private Button AdminAccessBtn;
     }
 }
