@@ -14,7 +14,7 @@ namespace IT13_Final_Project.Forms
     public partial class BookSelection : Form
     {
         private string connectionString =
-            "Server=LUPIN\\SQLEXPRESS;Initial Catalog=IT13;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+            "Data Source=LUPIN\\SQLEXPRESS;Initial Catalog=IT13;Integrated Security=True;Pooling=False;Encrypt=True;Trust Server Certificate=True";
 
         private string _genreName;
         private int _userId;  // Added to store UserID
@@ -43,7 +43,7 @@ namespace IT13_Final_Project.Forms
             {
                 using (SqlConnection con = new SqlConnection(connectionString))
                 {
-                    string query = @"SELECT BookID, BookTitle, Author, Description, Genre, BookImage, IsAvailable, Rating
+                    string query = @"SELECT BookID, BookTitle, Author, Description, Genre, BookImage, IsAvailable
                                      FROM Books 
                                      WHERE Genre = @Genre";
                     using (SqlCommand cmd = new SqlCommand(query, con))
@@ -64,8 +64,6 @@ namespace IT13_Final_Project.Forms
                     string desc = row["Description"].ToString();
                     string imagePath = row["BookImage"].ToString();
                     bool available = row["IsAvailable"] != DBNull.Value && (bool)row["IsAvailable"];
-                    int rating = row["Rating"] != DBNull.Value ? Convert.ToInt32(row["Rating"]) : 0;
-
                     // Create Panel
                     Panel bookPanel = new Panel
                     {
@@ -107,23 +105,13 @@ namespace IT13_Final_Project.Forms
                     };
                     bookPanel.Controls.Add(lblAvail);
 
-                    // Rating
-                    Label lblRating = new Label
-                    {
-                        Text = new string('⭐', rating),
-                        Location = new Point(10, 200),
-                        AutoSize = true,
-                        ForeColor = Color.DarkGoldenrod
-                    };
-                    bookPanel.Controls.Add(lblRating);
-
                     // Borrow Button
                     Button btnBorrow = new Button
                     {
                         Text = "Borrow",
                         Size = new Size(80, 23),
                         Location = new Point(60, 220),
-                        BackColor = Color.FromArgb(0, 0, 64),
+                        BackColor = Color.FromArgb(0, 0, 200),
                         ForeColor = Color.White,
                         FlatStyle = FlatStyle.Popup,
                         Enabled = available

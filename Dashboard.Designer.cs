@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            PictureBox pictureBox1;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Dashboard));
             panel1 = new Panel();
             menuBtn = new Button();
@@ -38,12 +39,26 @@
             button1 = new Button();
             button2 = new Button();
             panel6 = new Panel();
+            pictureBox1 = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             SuspendLayout();
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Anchor = AnchorStyles.None;
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(12, 70);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(164, 153);
+            pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox1.TabIndex = 8;
+            pictureBox1.TabStop = false;
             // 
             // panel1
             // 
             panel1.BackColor = Color.Tan;
+            panel1.Controls.Add(pictureBox1);
             panel1.Controls.Add(menuBtn);
             panel1.Controls.Add(label1);
             panel1.Controls.Add(button5);
@@ -56,7 +71,6 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(194, 749);
             panel1.TabIndex = 0;
-            panel1.Paint += panel1_Paint;
             // 
             // menuBtn
             // 
@@ -78,7 +92,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Times New Roman", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.FromArgb(128, 64, 0);
-            label1.Location = new Point(3, 130);
+            label1.Location = new Point(3, 226);
             label1.Name = "label1";
             label1.Size = new Size(187, 24);
             label1.TabIndex = 2;
@@ -95,7 +109,7 @@
             button5.ForeColor = Color.FromArgb(0, 0, 64);
             button5.Image = (Image)resources.GetObject("button5.Image");
             button5.ImageAlign = ContentAlignment.MiddleLeft;
-            button5.Location = new Point(12, 419);
+            button5.Location = new Point(3, 441);
             button5.Name = "button5";
             button5.Size = new Size(175, 41);
             button5.TabIndex = 6;
@@ -114,7 +128,7 @@
             button4.ForeColor = Color.FromArgb(0, 0, 64);
             button4.Image = (Image)resources.GetObject("button4.Image");
             button4.ImageAlign = ContentAlignment.MiddleLeft;
-            button4.Location = new Point(12, 362);
+            button4.Location = new Point(3, 394);
             button4.Name = "button4";
             button4.Size = new Size(178, 41);
             button4.TabIndex = 5;
@@ -133,7 +147,7 @@
             button3.ForeColor = Color.FromArgb(0, 0, 64);
             button3.Image = (Image)resources.GetObject("button3.Image");
             button3.ImageAlign = ContentAlignment.MiddleLeft;
-            button3.Location = new Point(9, 305);
+            button3.Location = new Point(3, 347);
             button3.Name = "button3";
             button3.Size = new Size(178, 41);
             button3.TabIndex = 4;
@@ -152,7 +166,7 @@
             button1.ForeColor = Color.FromArgb(0, 0, 64);
             button1.Image = (Image)resources.GetObject("button1.Image");
             button1.ImageAlign = ContentAlignment.MiddleLeft;
-            button1.Location = new Point(12, 189);
+            button1.Location = new Point(3, 253);
             button1.Name = "button1";
             button1.Size = new Size(178, 41);
             button1.TabIndex = 2;
@@ -171,7 +185,7 @@
             button2.ForeColor = Color.FromArgb(0, 0, 64);
             button2.Image = (Image)resources.GetObject("button2.Image");
             button2.ImageAlign = ContentAlignment.MiddleLeft;
-            button2.Location = new Point(12, 246);
+            button2.Location = new Point(3, 300);
             button2.Name = "button2";
             button2.Size = new Size(175, 41);
             button2.TabIndex = 3;
@@ -205,6 +219,7 @@
             Text = "Dashboard";
             WindowState = FormWindowState.Maximized;
             Load += Dashboard_Load;
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);
@@ -221,5 +236,6 @@
         private Label label1;
         private Panel panel6;
         private Button menuBtn;
+        private PictureBox pictureBox1;
     }
 }

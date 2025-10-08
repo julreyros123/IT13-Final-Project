@@ -112,6 +112,7 @@
             AdminPasswordTb.Location = new Point(106, 249);
             AdminPasswordTb.Multiline = true;
             AdminPasswordTb.Name = "AdminPasswordTb";
+            AdminPasswordTb.PasswordChar = '*';
             AdminPasswordTb.PlaceholderText = "Password";
             AdminPasswordTb.Size = new Size(176, 28);
             AdminPasswordTb.TabIndex = 4;

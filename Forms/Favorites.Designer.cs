@@ -41,7 +41,7 @@
             panel2.Dock = DockStyle.Top;
             panel2.Location = new Point(0, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1036, 83);
+            panel2.Size = new Size(1312, 83);
             panel2.TabIndex = 3;
             // 
             // label2
@@ -58,17 +58,19 @@
             // flowLayoutPanel1
             // 
             flowLayoutPanel1.Anchor = AnchorStyles.Left;
+            flowLayoutPanel1.AutoScroll = true;
             flowLayoutPanel1.BackColor = Color.Chocolate;
-            flowLayoutPanel1.Location = new Point(241, 152);
+            flowLayoutPanel1.Location = new Point(137, 125);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(728, 137);
+            flowLayoutPanel1.Size = new Size(1030, 481);
             flowLayoutPanel1.TabIndex = 4;
+            flowLayoutPanel1.Scroll += flowLayoutPanel1_Scroll;
             // 
             // Favorites
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1036, 450);
+            ClientSize = new Size(1312, 630);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(panel2);
             Name = "Favorites";

@@ -110,13 +110,15 @@ namespace IT13_Final_Project.Forms
             // panel4
             // 
             panel4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel4.AutoScroll = true;
             panel4.BackColor = Color.Chocolate;
             panel4.Controls.Add(panel5);
             panel4.Controls.Add(label4);
             panel4.Location = new Point(163, 205);
             panel4.Name = "panel4";
-            panel4.Size = new Size(983, 520);
+            panel4.Size = new Size(1062, 520);
             panel4.TabIndex = 6;
+            panel4.Scroll += panel4_Scroll;
             // 
             // panel5
             // 
@@ -131,14 +133,14 @@ namespace IT13_Final_Project.Forms
             panel5.Controls.Add(label5);
             panel5.Location = new Point(31, 68);
             panel5.Name = "panel5";
-            panel5.Size = new Size(893, 97);
+            panel5.Size = new Size(859, 97);
             panel5.TabIndex = 1;
             // 
             // panel6
             // 
             panel6.BackColor = Color.FromArgb(0, 192, 0);
             panel6.Controls.Add(label12);
-            panel6.Location = new Point(765, 23);
+            panel6.Location = new Point(735, 23);
             panel6.Name = "panel6";
             panel6.Size = new Size(109, 41);
             panel6.TabIndex = 9;

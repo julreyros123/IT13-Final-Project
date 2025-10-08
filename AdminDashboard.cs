@@ -15,7 +15,7 @@ namespace IT13_Final_Project
     {
 
         private readonly string connectionString =
-           "Server=LUPIN\\SQLEXPRESS;Initial Catalog=IT13;Integrated Security=True;Pooling=False;Encrypt=True;Trust Server Certificate=True";
+           "Data Source=LUPIN\\SQLEXPRESS;Initial Catalog=IT13;Integrated Security=True;Pooling=False;Encrypt=True;Trust Server Certificate=True";
         private int selectedBookId;
 
         public AdminDashboard()
@@ -24,15 +24,71 @@ namespace IT13_Final_Project
             this.Load += AdminDashboard_Load;
         }
 
+        // ✅ Load genres into ComboBox
+        private void LoadGenresToComboBox()
+        {
+            cmbGenre.Items.Clear();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string query = "SELECT GenreName FROM Genre ORDER BY GenreName";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            cmbGenre.Items.Add(reader["GenreName"].ToString());
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading genres (ComboBox): " + ex.Message, "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
 
+        // ✅ Load Books into DataGridView
+        private void LoadBooks()
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string query = "SELECT BookID, BookTitle, Author, Description, Genre, BookImage FROM Books";
+                    using (SqlDataAdapter da = new SqlDataAdapter(query, conn))
+                    {
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+                        dataGridViewBooks.DataSource = dt;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading books: " + ex.Message, "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
-        private void txtGenreName_TextChanged(object sender, EventArgs e)
+        private void AdminDashboard_Load(object sender, EventArgs e)
+        {
+            LoadBooks();
+            LoadGenres();
+        }
+
+        private void AdminDashboard_Load_1(object sender, EventArgs e)
         {
 
         }
 
-        private void btnAddGenre_Click(object sender, EventArgs e)
+        private void btnAddGenre_Click_1(object sender, EventArgs e)
         {
             string genreName = txtGenreName.Text.Trim();
 
@@ -116,65 +172,17 @@ namespace IT13_Final_Project
             }
         }
 
-        // ✅ Load genres into ComboBox
-        private void LoadGenresToComboBox()
+        private void cmbGenre_SelectedIndexChanged_1(object sender, EventArgs e)
         {
-            cmbGenre.Items.Clear();
 
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
-                    conn.Open();
-                    string query = "SELECT GenreName FROM Genre ORDER BY GenreName";
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            cmbGenre.Items.Add(reader["GenreName"].ToString());
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error loading genres (ComboBox): " + ex.Message, "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
-        private void listBoxGenres_SelectedIndexChanged(object sender, EventArgs e)
+        private void listBoxGenres_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             if (listBoxGenres.SelectedItem != null)
             {
                 txtGenreName.Text = listBoxGenres.SelectedItem.ToString();
             }
-        }
-
-        private void txtBookTitle_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtAuthor_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtDescription_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cmbGenre_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtPhotoPath_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
@@ -192,36 +200,6 @@ namespace IT13_Final_Project
                     }
                 }
             }
-        }
-
-        // ✅ Load Books into DataGridView
-        private void LoadBooks()
-        {
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
-                    conn.Open();
-                    string query = "SELECT BookID, BookTitle, Author, Description, Genre, BookImage FROM Books";
-                    using (SqlDataAdapter da = new SqlDataAdapter(query, conn))
-                    {
-                        DataTable dt = new DataTable();
-                        da.Fill(dt);
-                        dataGridViewBooks.DataSource = dt;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error loading books: " + ex.Message, "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-
-        private void pictureBoxBook_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void btnAddBook_Click(object sender, EventArgs e)
@@ -289,18 +267,13 @@ namespace IT13_Final_Project
             }
         }
 
-        private void AdminDashboard_Load(object sender, EventArgs e)
-        {
-            LoadBooks();
-            LoadGenres();
-        }
-
-        private void dataGridViewBooks_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridViewBooks_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dataGridViewBooks.Rows[e.RowIndex];
                 selectedBookId = Convert.ToInt32(row.Cells["BookID"].Value);
+                txtUpdateTitle.Text = row.Cells["BookTitle"].Value.ToString();
                 txtUpdateAuthor.Text = row.Cells["Author"].Value.ToString();
                 txtUpdateDescription.Text = row.Cells["Description"].Value.ToString();
                 cmbUpdateGenre.Text = row.Cells["Genre"].Value.ToString();
@@ -324,23 +297,7 @@ namespace IT13_Final_Project
             }
         }
 
-
-        private void txtUpdateDescription_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cmbUpdateGenre_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtUpdatePhoto_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnUpdateBrowse_Click(object sender, EventArgs e)
+        private void btnUpdateBrowse_Click_1(object sender, EventArgs e)
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
@@ -355,11 +312,6 @@ namespace IT13_Final_Project
             }
         }
 
-        private void pictureBoxUpdate_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             if (selectedBookId == -1)
@@ -369,12 +321,14 @@ namespace IT13_Final_Project
                 return;
             }
 
+            string booktitle = txtUpdateTitle.Text.Trim();
             string description = txtUpdateDescription.Text.Trim();
             string author = txtUpdateAuthor.Text.Trim();
             string genre = cmbUpdateGenre.SelectedItem?.ToString();
             string imagePath = txtUpdatePhoto.Text.Trim();
 
-            if (string.IsNullOrWhiteSpace(description) ||
+            if (string.IsNullOrWhiteSpace(booktitle) ||
+                string.IsNullOrWhiteSpace(description) ||
                 string.IsNullOrWhiteSpace(author) ||
                 string.IsNullOrWhiteSpace(genre) ||
                 string.IsNullOrWhiteSpace(imagePath))
@@ -390,11 +344,12 @@ namespace IT13_Final_Project
                 {
                     conn.Open();
                     string query = @"UPDATE Books 
-                                     SET Description = @desc, Author = @auth, Genre = @genre, BookImage = @img 
+                                     SET BookTitle = @title, Description = @desc, Author = @auth, Genre = @genre, BookImage = @img 
                                      WHERE BookID = @id";
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
+                        cmd.Parameters.AddWithValue("@title", booktitle);
                         cmd.Parameters.AddWithValue("@desc", description);
                         cmd.Parameters.AddWithValue("@auth", author);
                         cmd.Parameters.AddWithValue("@genre", genre);
@@ -424,9 +379,9 @@ namespace IT13_Final_Project
             }
         }
 
-
-        private void btnDelete_Click(object sender, EventArgs e)
+        private void btnDelete_Click_1(object sender, EventArgs e)
         {
+
             if (selectedBookId == -1)
             {
                 MessageBox.Show("Please select a book first.", "Warning",
@@ -473,12 +428,27 @@ namespace IT13_Final_Project
             }
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Login Login = new Login();
+            Login.Show();
+            this.Hide();
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void txtUpdateAuthor_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label10_Click(object sender, EventArgs e)
         {
 
         }
     }
 }
-
-
 

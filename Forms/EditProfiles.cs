@@ -13,7 +13,7 @@ namespace IT13_Final_Project.Forms
 {
     public partial class EditProfiles : Form
     {
-        private string connectionString = "Server=LUPIN\\SQLEXPRESS;Initial Catalog=IT13;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+        private string connectionString = "Data Source=LUPIN\\SQLEXPRESS;Initial Catalog=IT13;Integrated Security=True;Pooling=False;Encrypt=True;Trust Server Certificate=True";
         public int UserID { get; set; }
 
         public EditProfiles(int userID)

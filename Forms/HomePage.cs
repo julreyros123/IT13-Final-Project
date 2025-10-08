@@ -10,7 +10,7 @@ namespace IT13_Final_Project.Forms
     public partial class HomePage : Form
     {
         private string connectionString =
-           "Server=LUPIN\\SQLEXPRESS;Initial Catalog=IT13;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+           "Data Source=LUPIN\\SQLEXPRESS;Initial Catalog=IT13;Integrated Security=True;Pooling=False;Encrypt=True;Trust Server Certificate=True";
 
         private int _userId; // ✅ User session
         public static Panel MainPanel;

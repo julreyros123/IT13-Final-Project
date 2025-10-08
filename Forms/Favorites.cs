@@ -229,5 +229,10 @@ namespace IT13_Final_Project.Forms
             Dashboard.MainPanel.Controls.Add(favForm);
             favForm.Show();
         }
+
+        private void flowLayoutPanel1_Scroll(object sender, ScrollEventArgs e)
+        {
+
+        }
     }
 }

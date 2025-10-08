@@ -14,7 +14,7 @@ namespace IT13_Final_Project
     public partial class Login : Form
     {
         private string connectionString =
-           "Server=LUPIN\\SQLEXPRESS;Initial Catalog=IT13;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+           "Data Source=LUPIN\\SQLEXPRESS;Initial Catalog=IT13;Integrated Security=True;Pooling=False;Encrypt=True;Trust Server Certificate=True";
 
         public Login()
         {
@@ -26,17 +26,17 @@ namespace IT13_Final_Project
             string username = LoginUserTb.Text.Trim();
             string password = LoginPasswordTb.Text.Trim();
 
-            // ✅ Try logging in and get UserID
-            int? userId = SignIn(username, password);
+            // ✅ Try logging in and get user info
+            DataRow userInfo = SignIn(username, password);
 
-            if (userId.HasValue)
+            if (userInfo != null)
             {
                 MessageBox.Show("✅ Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // ✅ Pass the logged-in user's ID to Dashboard
-                Dashboard dashboard = new Dashboard(userId.Value);
+                // ✅ Pass user info to Dashboard
+                int userId = Convert.ToInt32(userInfo["UserId"]); // Replace "UserId" with the actual column name for the user ID in your Users table
+                Dashboard dashboard = new Dashboard(userId);
                 dashboard.Show();
-
                 this.Hide();
             }
             else
@@ -45,8 +45,8 @@ namespace IT13_Final_Project
             }
         }
 
-        // ✅ Return UserID instead of bool
-        private int? SignIn(string username, string password)
+        // ✅ Return DataRow with user details
+        private DataRow SignIn(string username, string password)
         {
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
                 return null;
@@ -57,24 +57,20 @@ namespace IT13_Final_Project
                 {
                     conn.Open();
 
-                    string query = "SELECT UserID FROM Users WHERE Username = @username AND Password = @password";
+                    string query = "SELECT * FROM Users WHERE Username = @username AND Password = @password";
 
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@username", username);
-                        cmd.Parameters.AddWithValue("@password", password);
+                        adapter.SelectCommand.Parameters.AddWithValue("@username", username);
+                        adapter.SelectCommand.Parameters.AddWithValue("@password", password);
 
-                        object result = cmd.ExecuteScalar();
+                        DataTable dt = new DataTable();
+                        adapter.Fill(dt);
 
-                        if (result != null)
-                        {
-                            // ✅ Return the UserID
-                            return Convert.ToInt32(result);
-                        }
+                        if (dt.Rows.Count > 0)
+                            return dt.Rows[0];
                         else
-                        {
                             return null;
-                        }
                     }
                 }
             }
@@ -83,14 +79,6 @@ namespace IT13_Final_Project
                 MessageBox.Show("Database error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
-        }
-
-        private void LoginPasswordTb_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void LoginUserTb_TextChanged(object sender, EventArgs e)
-        {
         }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -102,14 +90,9 @@ namespace IT13_Final_Project
 
         private void AdminAccessBtn_Click(object sender, EventArgs e)
         {
-            AdminLogin Adminlogin = new AdminLogin();
-            Adminlogin.Show();
+            AdminLogin adminLogin = new AdminLogin();
+            adminLogin.Show();
             this.Hide();
-        }
-
-        private void Login_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

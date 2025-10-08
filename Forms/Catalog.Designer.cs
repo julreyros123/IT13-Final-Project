@@ -46,7 +46,7 @@ namespace IT13_Final_Project.Forms
             panel2.Dock = DockStyle.Top;
             panel2.Location = new Point(0, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1244, 83);
+            panel2.Size = new Size(1306, 83);
             panel2.TabIndex = 2;
             // 
             // label2
@@ -54,7 +54,7 @@ namespace IT13_Final_Project.Forms
             label2.AutoSize = true;
             label2.Font = new Font("Microsoft New Tai Lue", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.FromArgb(128, 64, 0);
-            label2.Location = new Point(642, 21);
+            label2.Location = new Point(572, 23);
             label2.Name = "label2";
             label2.Size = new Size(139, 35);
             label2.TabIndex = 0;
@@ -66,7 +66,7 @@ namespace IT13_Final_Project.Forms
             searchgenreTb.BackColor = SystemColors.ControlLight;
             searchgenreTb.BorderStyle = BorderStyle.FixedSingle;
             searchgenreTb.Font = new Font("Microsoft JhengHei", 9F, FontStyle.Bold);
-            searchgenreTb.Location = new Point(622, 125);
+            searchgenreTb.Location = new Point(513, 121);
             searchgenreTb.Multiline = true;
             searchgenreTb.Name = "searchgenreTb";
             searchgenreTb.PlaceholderText = "Search Genres...";
@@ -86,7 +86,7 @@ namespace IT13_Final_Project.Forms
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1244, 484);
+            ClientSize = new Size(1306, 623);
             Controls.Add(genreFlowPanel);
             Controls.Add(searchgenreTb);
             Controls.Add(panel2);
