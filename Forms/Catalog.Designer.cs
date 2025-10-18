@@ -1,8 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-
-namespace IT13_Final_Project.Forms
+﻿namespace IT13_Final_Project.Forms
 {
     partial class Catalog
     {
@@ -18,93 +14,134 @@ namespace IT13_Final_Project.Forms
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
-            {
                 components.Dispose();
-            }
             base.Dispose(disposing);
         }
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            panel2 = new Panel();
-            label2 = new Label();
-            searchgenreTb = new TextBox();
             genreFlowPanel = new FlowLayoutPanel();
-            panel2.SuspendLayout();
+            panelHeader = new Panel();
+            lblTitle = new Label();
+            Filter = new ComboBox();
+            searchgenreTb = new TextBox();
+            lblFilter = new Label();
+            panelTopControls = new Panel();
+            panelHeader.SuspendLayout();
+            panelTopControls.SuspendLayout();
             SuspendLayout();
-            // 
-            // panel2
-            // 
-            panel2.BackColor = Color.BurlyWood;
-            panel2.Controls.Add(label2);
-            panel2.Dock = DockStyle.Top;
-            panel2.Location = new Point(0, 0);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(1244, 83);
-            panel2.TabIndex = 2;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Microsoft New Tai Lue", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.ForeColor = Color.FromArgb(128, 64, 0);
-            label2.Location = new Point(642, 21);
-            label2.Name = "label2";
-            label2.Size = new Size(139, 35);
-            label2.TabIndex = 0;
-            label2.Text = "CATALOG";
-            label2.Click += label2_Click;
-            // 
-            // searchgenreTb
-            // 
-            searchgenreTb.BackColor = SystemColors.ControlLight;
-            searchgenreTb.BorderStyle = BorderStyle.FixedSingle;
-            searchgenreTb.Font = new Font("Microsoft JhengHei", 9F, FontStyle.Bold);
-            searchgenreTb.Location = new Point(622, 125);
-            searchgenreTb.Multiline = true;
-            searchgenreTb.Name = "searchgenreTb";
-            searchgenreTb.PlaceholderText = "Search Genres...";
-            searchgenreTb.Size = new Size(268, 30);
-            searchgenreTb.TabIndex = 3;
-            searchgenreTb.TextChanged += searchgenreTb_TextChanged;
             // 
             // genreFlowPanel
             // 
+            genreFlowPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             genreFlowPanel.AutoScroll = true;
-            genreFlowPanel.Location = new Point(100, 180);
+            genreFlowPanel.BackColor = Color.White;
+            genreFlowPanel.Location = new Point(100, 153);
+            genreFlowPanel.Margin = new Padding(5);
             genreFlowPanel.Name = "genreFlowPanel";
-            genreFlowPanel.Size = new Size(1044, 280);
+            genreFlowPanel.Padding = new Padding(10);
+            genreFlowPanel.Size = new Size(1100, 465);
             genreFlowPanel.TabIndex = 4;
+            genreFlowPanel.Paint += genreFlowPanel_Paint;
+            // 
+            // panelHeader
+            // 
+            panelHeader.BackColor = Color.DodgerBlue;
+            panelHeader.Controls.Add(lblTitle);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Padding = new Padding(10);
+            panelHeader.Size = new Size(1306, 80);
+            panelHeader.TabIndex = 2;
+            // 
+            // lblTitle
+            // 
+            lblTitle.Dock = DockStyle.Fill;
+            lblTitle.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.White;
+            lblTitle.Location = new Point(10, 10);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(1286, 60);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "📚 CATALOG";
+            lblTitle.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // Filter
+            // 
+            Filter.BackColor = Color.WhiteSmoke;
+            Filter.DropDownStyle = ComboBoxStyle.DropDownList;
+            Filter.FlatStyle = FlatStyle.Flat;
+            Filter.Font = new Font("Segoe UI", 11F);
+            Filter.ForeColor = Color.FromArgb(92, 51, 23);
+            Filter.Location = new Point(90, 12);
+            Filter.Name = "Filter";
+            Filter.Size = new Size(250, 28);
+            Filter.TabIndex = 0;
+            Filter.SelectedIndexChanged += Filter_SelectedIndexChanged;
+            // 
+            // searchgenreTb
+            // 
+            searchgenreTb.Font = new Font("Segoe UI", 10F);
+            searchgenreTb.ForeColor = Color.Gray;
+            searchgenreTb.Location = new Point(422, 12);
+            searchgenreTb.Name = "searchgenreTb";
+            searchgenreTb.PlaceholderText = "🔍 Search books or authors...";
+            searchgenreTb.Size = new Size(280, 25);
+            searchgenreTb.TabIndex = 1;
+            searchgenreTb.TextChanged += searchgenreTb_TextChanged;
+            // 
+            // lblFilter
+            // 
+            lblFilter.AutoSize = true;
+            lblFilter.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            lblFilter.ForeColor = Color.FromArgb(92, 51, 23);
+            lblFilter.Location = new Point(10, 15);
+            lblFilter.Name = "lblFilter";
+            lblFilter.Size = new Size(63, 19);
+            lblFilter.TabIndex = 0;
+            lblFilter.Text = "Filter by:";
+            // 
+            // panelTopControls
+            // 
+            panelTopControls.BackColor = Color.Transparent;
+            panelTopControls.Controls.Add(lblFilter);
+            panelTopControls.Controls.Add(Filter);
+            panelTopControls.Controls.Add(searchgenreTb);
+            panelTopControls.Location = new Point(100, 95);
+            panelTopControls.Name = "panelTopControls";
+            panelTopControls.Size = new Size(1100, 50);
+            panelTopControls.TabIndex = 5;
             // 
             // Catalog
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1244, 484);
+            BackColor = Color.White;
+            ClientSize = new Size(1306, 623);
+            Controls.Add(panelTopControls);
             Controls.Add(genreFlowPanel);
-            Controls.Add(searchgenreTb);
-            Controls.Add(panel2);
+            Controls.Add(panelHeader);
             Name = "Catalog";
             Text = "Catalog";
             WindowState = FormWindowState.Maximized;
             Load += Catalog_Load;
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
+            panelHeader.ResumeLayout(false);
+            panelTopControls.ResumeLayout(false);
+            panelTopControls.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
-        private Panel panel2;
-        private Label label2;
-        private TextBox searchgenreTb;
+        private Panel panelHeader;
+        private Label lblTitle;
         private FlowLayoutPanel genreFlowPanel;
+        private ComboBox Filter;
+        private TextBox searchgenreTb;
+        private Label lblFilter;
+        private Panel panelTopControls;
     }
 }

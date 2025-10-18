@@ -1,12 +1,9 @@
 ﻿using Microsoft.Data.SqlClient;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace IT13_Final_Project
@@ -14,11 +11,12 @@ namespace IT13_Final_Project
     public partial class Login : Form
     {
         private string connectionString =
-           "Server=LUPIN\\SQLEXPRESS;Initial Catalog=IT13;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+           "Data Source=LUPIN\\SQLEXPRESS;Initial Catalog=IT13;Integrated Security=True;Pooling=False;Encrypt=True;Trust Server Certificate=True";
 
         public Login()
         {
             InitializeComponent();
+            LoginPasswordTb.PasswordChar = '*'; // Set password character to *
         }
 
         private void SignInBtn_Click(object sender, EventArgs e)
@@ -26,18 +24,38 @@ namespace IT13_Final_Project
             string username = LoginUserTb.Text.Trim();
             string password = LoginPasswordTb.Text.Trim();
 
-            // ✅ Try logging in and get UserID
-            int? userId = SignIn(username, password);
+            // ✅ Hash the entered password before comparing
+            string hashedPassword = HashPassword(password);
 
-            if (userId.HasValue)
+            // ✅ Try logging in and get user info
+            DataRow userInfo = SignIn(username, hashedPassword);
+
+            if (userInfo != null)
             {
-                MessageBox.Show("✅ Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                try
+                {
+                    int userId = Convert.ToInt32(userInfo["UserId"]);
+                    string role = userInfo["Role"].ToString(); // Get the role from the user info
 
-                // ✅ Pass the logged-in user's ID to Dashboard
-                Dashboard dashboard = new Dashboard(userId.Value);
-                dashboard.Show();
-
-                this.Hide();
+                    if (role == "Admin")
+                    {
+                        MessageBox.Show("✅ Login successful! Redirecting to Admin Dashboard.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        AdminDashboard adminDashboard = new AdminDashboard();
+                        adminDashboard.Show();
+                        this.Hide();
+                    }
+                    else
+                    {
+                        MessageBox.Show("✅ Login successful! Redirecting to User Dashboard.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Dashboard dashboard = new Dashboard(userId);
+                        dashboard.Show();
+                        this.Hide();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error loading dashboard: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {
@@ -45,10 +63,26 @@ namespace IT13_Final_Project
             }
         }
 
-        // ✅ Return UserID instead of bool
-        private int? SignIn(string username, string password)
+        // ✅ Function to hash password using SHA256
+        private string HashPassword(string password)
         {
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] bytes = Encoding.UTF8.GetBytes(password);
+                byte[] hash = sha256.ComputeHash(bytes);
+                StringBuilder builder = new StringBuilder();
+                foreach (byte b in hash)
+                {
+                    builder.Append(b.ToString("x2"));
+                }
+                return builder.ToString();
+            }
+        }
+
+        // ✅ Validate user with hashed password
+        private DataRow SignIn(string username, string hashedPassword)
+        {
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(hashedPassword))
                 return null;
 
             try
@@ -57,24 +91,20 @@ namespace IT13_Final_Project
                 {
                     conn.Open();
 
-                    string query = "SELECT UserID FROM Users WHERE Username = @username AND Password = @password";
+                    string query = "SELECT * FROM Users WHERE Username = @username AND Password = @password";
 
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@username", username);
-                        cmd.Parameters.AddWithValue("@password", password);
+                        adapter.SelectCommand.Parameters.AddWithValue("@username", username);
+                        adapter.SelectCommand.Parameters.AddWithValue("@password", hashedPassword);
 
-                        object result = cmd.ExecuteScalar();
+                        DataTable dt = new DataTable();
+                        adapter.Fill(dt);
 
-                        if (result != null)
-                        {
-                            // ✅ Return the UserID
-                            return Convert.ToInt32(result);
-                        }
+                        if (dt.Rows.Count > 0)
+                            return dt.Rows[0];
                         else
-                        {
                             return null;
-                        }
                     }
                 }
             }
@@ -85,14 +115,6 @@ namespace IT13_Final_Project
             }
         }
 
-        private void LoginPasswordTb_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void LoginUserTb_TextChanged(object sender, EventArgs e)
-        {
-        }
-
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Form1 newform = new Form1(this);
@@ -100,16 +122,6 @@ namespace IT13_Final_Project
             this.Hide();
         }
 
-        private void AdminAccessBtn_Click(object sender, EventArgs e)
-        {
-            AdminLogin Adminlogin = new AdminLogin();
-            Adminlogin.Show();
-            this.Hide();
-        }
-
-        private void Login_Load(object sender, EventArgs e)
-        {
-
-        }
+        private void LoginUserTb_TextChanged(object sender, EventArgs e) { }
     }
 }

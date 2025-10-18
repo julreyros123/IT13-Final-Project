@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Data.SqlClient;
 
@@ -17,25 +12,30 @@ namespace IT13_Final_Project.Forms
         private string connectionString =
             "Data Source=LUPIN\\SQLEXPRESS;Initial Catalog=IT13;Integrated Security=True;Pooling=False;Encrypt=True;Trust Server Certificate=True";
 
-        // Default constructor for Designer
         public Profile()
         {
             InitializeComponent();
         }
 
-        // Constructor when opening with UserID
         public Profile(int userId)
         {
             InitializeComponent();
             _userId = userId;
         }
 
-        private void Profile_Load(object sender, EventArgs e)
+        private void Profile_Load_2(object sender, EventArgs e) // Matches designer
         {
             if (_userId > 0)
+            {
                 LoadUserData(_userId);
+            }
+            else
+            {
+                MessageBox.Show("⚠ No user ID provided. Please log in again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
+        // ✅ Load all user data and live stats into textboxes
         private void LoadUserData(int userId)
         {
             try
@@ -43,9 +43,12 @@ namespace IT13_Final_Project.Forms
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    string query = @"SELECT Username, Email, Contact, Address, JoinDate, 
-                                            TotalBorrowed, CurrentlyBorrowed, OverdueBooks, FinesDue
-                                     FROM Users WHERE UserID = @UserID";
+
+                    // 🔹 Get basic profile info
+                    string query = @"
+                        SELECT Username, Email, Contact, Address, JoinDate
+                        FROM Users
+                        WHERE UserID = @UserID";
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
@@ -55,59 +58,116 @@ namespace IT13_Final_Project.Forms
                         {
                             if (reader.Read())
                             {
-                                // Panel 3: Basic info
-                                lblName.Text = reader["Username"] != DBNull.Value ? reader["Username"].ToString() : "N/A";
-                                lblEmail.Text = reader["Email"] != DBNull.Value ? reader["Email"].ToString() : "N/A";
-                                lblContact.Text = reader["Contact"] != DBNull.Value ? reader["Contact"].ToString() : "N/A";
-                                lblAddress.Text = reader["Address"] != DBNull.Value ? reader["Address"].ToString() : "N/A";
+                                // ✅ Basic Info
+                                textBox10.Text = reader["Username"] != DBNull.Value ? reader["Username"].ToString() : "N/A";
+                                textBox1.Text = reader["Contact"] != DBNull.Value ? reader["Contact"].ToString() : "N/A";
+                                textBox2.Text = reader["Email"] != DBNull.Value ? reader["Email"].ToString() : "N/A";
+                                textBox3.Text = reader["Address"] != DBNull.Value ? reader["Address"].ToString() : "N/A";
 
-                                // Panel 4: Membership + stats
-                                lblMemberID.Text = userId.ToString(); // Membership ID
-                                lblJoinDate.Text = reader["JoinDate"] != DBNull.Value ? Convert.ToDateTime(reader["JoinDate"]).ToString("yyyy-MM-dd") : "N/A";
-                                lblTotalBorrowed.Text = reader["TotalBorrowed"] != DBNull.Value ? reader["TotalBorrowed"].ToString() : "0";
-                                lblCurrentlyBorrowed.Text = reader["CurrentlyBorrowed"] != DBNull.Value ? reader["CurrentlyBorrowed"].ToString() : "0";
-                                lblOverdue.Text = reader["OverdueBooks"] != DBNull.Value ? reader["OverdueBooks"].ToString() : "0";
-                                lblFines.Text = reader["FinesDue"] != DBNull.Value ? "$ " + Convert.ToDecimal(reader["FinesDue"]).ToString("0.00") : "$ 0.00";
+                                // ✅ Membership Info
+                                textBox4.Text = userId.ToString(); // Membership ID
+                                textBox7.Text = reader["JoinDate"] != DBNull.Value
+                                                ? Convert.ToDateTime(reader["JoinDate"]).ToString("yyyy-MM-dd")
+                                                : "N/A";
                             }
                             else
                             {
-                                MessageBox.Show("No user data found for the given ID.");
+                                MessageBox.Show($"No user data found for UserID: {userId}. Check the Users table.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                return;
                             }
                         }
                     }
+
+                    // 🔹 Now load the dynamic statistics
+                    // 1️⃣ Total Reservations
+                    string totalReservationsQuery = "SELECT COUNT(*) FROM Reservations WHERE UserID = @UserID";
+                    using (SqlCommand cmd = new SqlCommand(totalReservationsQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@UserID", userId);
+                        int totalReservations = Convert.ToInt32(cmd.ExecuteScalar() ?? 0); // Handle null
+                        textBox5.Text = totalReservations.ToString();
+                    }
+
+                    // 2️⃣ Reservations currently held
+                    string reservedQuery = "SELECT COUNT(*) FROM Reservations WHERE UserID = @UserID AND ReturnDate IS NULL";
+                    using (SqlCommand cmd = new SqlCommand(reservedQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@UserID", userId);
+                        int reservedCount = Convert.ToInt32(cmd.ExecuteScalar() ?? 0); // Handle null
+                        textBox8.Text = reservedCount.ToString();
+                    }
+
+                    // 3️⃣ Overdue Reservations
+                    string overdueQuery = "SELECT COUNT(*) FROM Reservations WHERE UserID = @UserID AND DueDate < GETDATE() AND ReturnDate IS NULL";
+                    using (SqlCommand cmd = new SqlCommand(overdueQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@UserID", userId);
+                        int overdueCount = Convert.ToInt32(cmd.ExecuteScalar() ?? 0); // Handle null
+                        textBox6.Text = overdueCount.ToString();
+                    }
+
+                    // 4️⃣ Fines Due
+                    string finesQuery = "SELECT ISNULL(SUM(FineAmount), 0) FROM Reservations WHERE UserID = @UserID AND FineAmount > 0";
+                    using (SqlCommand cmd = new SqlCommand(finesQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@UserID", userId);
+                        decimal finesDue = Convert.ToDecimal(cmd.ExecuteScalar()); // No null check needed due to ISNULL
+                        textBox9.Text = finesDue.ToString("0.00");
+                    }
+
+                    MakeTextboxesReadOnly();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error loading user data: " + ex.Message);
+                MessageBox.Show($"Error loading user data: {ex.Message}\nStack Trace: {ex.StackTrace}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        // ✅ Make all textboxes read-only
+        private void MakeTextboxesReadOnly()
         {
-            Login LoginForm = new Login();
-            this.Hide();
-            LoginForm.Show();
+            foreach (Control panel in this.Controls)
+            {
+                if (panel is Panel)
+                {
+                    foreach (Control ctrl in panel.Controls)
+                    {
+                        if (ctrl is TextBox tb)
+                            tb.ReadOnly = true;
+                    }
+                }
+            }
         }
 
+        // ✅ Log out button
+
+
+        // ✅ Edit profile button
         private void button1_Click(object sender, EventArgs e)
         {
-            EditProfiles editProfiles = new EditProfiles(_userId); // Pass _userId to constructor
-            this.Hide();
-            editProfiles.Show();
-        }
-        private void Profile_Load_1(object sender, EventArgs e)
-        {
-            // You can call your existing load function here
-            Profile_Load(sender, e);
+            EditProfiles editForm = new EditProfiles(_userId);
+            editForm.Show();
         }
 
-        private void label6_Click(object sender, EventArgs e)
+        private void textBox1_TextChanged(object sender, EventArgs e) { }
+        private void textBox7_TextChanged(object sender, EventArgs e) { }
+        private void textBox10_TextChanged(object sender, EventArgs e) { }
+
+        // Example: Show Profile as a layer in a parent panel (e.g., Dashboard.MainPanel)
+        public void ShowAsLayer(int userId)
         {
+            var profileLayer = new Profile(userId);
+            profileLayer.TopLevel = false;
+            profileLayer.Dock = DockStyle.Fill;
+            Dashboard.MainPanel.Controls.Clear();
+            Dashboard.MainPanel.Controls.Add(profileLayer);
+            profileLayer.Show();
         }
 
-        private void label10_Click(object sender, EventArgs e)
+        private void label5_Click(object sender, EventArgs e)
         {
+            // Empty handler, can be removed if not needed
         }
     }
 }

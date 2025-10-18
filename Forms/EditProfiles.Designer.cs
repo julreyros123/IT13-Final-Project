@@ -51,30 +51,30 @@
             // 
             // panelHeader
             // 
-            panelHeader.BackColor = Color.FromArgb(128, 64, 0);
+            panelHeader.BackColor = Color.FromArgb(33, 150, 243); // Modern blue shade
             panelHeader.Controls.Add(lblEditProfile);
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(0, 0);
             panelHeader.Name = "panelHeader";
-            panelHeader.Size = new Size(800, 60);
+            panelHeader.Size = new Size(600, 50);
             panelHeader.TabIndex = 0;
             // 
             // lblEditProfile
             // 
             lblEditProfile.AutoSize = true;
-            lblEditProfile.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            lblEditProfile.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             lblEditProfile.ForeColor = Color.White;
-            lblEditProfile.Location = new Point(20, 15);
+            lblEditProfile.Location = new Point(15, 12);
             lblEditProfile.Name = "lblEditProfile";
-            lblEditProfile.Size = new Size(128, 30);
+            lblEditProfile.Size = new Size(128, 25);
             lblEditProfile.TabIndex = 0;
             lblEditProfile.Text = "Edit Profile";
             // 
             // panelForm
             // 
-            panelForm.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panelForm.BackColor = Color.NavajoWhite;
-            panelForm.BorderStyle = BorderStyle.FixedSingle;
+            panelForm.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panelForm.BackColor = Color.White;
+            panelForm.BorderStyle = BorderStyle.None;
             panelForm.Controls.Add(btnCancel);
             panelForm.Controls.Add(btnSave);
             panelForm.Controls.Add(txtConfirmPassword);
@@ -89,190 +89,208 @@
             panelForm.Controls.Add(lblEmail);
             panelForm.Controls.Add(txtUsername);
             panelForm.Controls.Add(lblUsername);
-            panelForm.Location = new Point(150, 100);
+            panelForm.Location = new Point(10, 60);
             panelForm.Name = "panelForm";
-            panelForm.Padding = new Padding(20);
-            panelForm.Size = new Size(500, 300);
+            panelForm.Padding = new Padding(15);
+            panelForm.Size = new Size(580, 300);
             panelForm.TabIndex = 1;
-            panelForm.UseWaitCursor = true;
             // 
             // btnCancel
             // 
-            btnCancel.BackColor = Color.Peru;
+            btnCancel.BackColor = Color.FromArgb(244, 67, 54); // Modern red shade
+            btnCancel.FlatAppearance.BorderSize = 0;
             btnCancel.FlatStyle = FlatStyle.Flat;
             btnCancel.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnCancel.ForeColor = Color.White;
-            btnCancel.Location = new Point(320, 260);
+            btnCancel.Location = new Point(360, 260);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(100, 30);
             btnCancel.TabIndex = 13;
             btnCancel.Text = "Cancel";
             btnCancel.UseVisualStyleBackColor = false;
-            btnCancel.UseWaitCursor = true;
+            btnCancel.FlatAppearance.MouseOverBackColor = Color.FromArgb(211, 47, 47);
             btnCancel.Click += btnCancel_Click_1;
             // 
             // btnSave
             // 
-            btnSave.BackColor = Color.Peru;
+            btnSave.BackColor = Color.FromArgb(33, 150, 243); // Modern blue shade
+            btnSave.FlatAppearance.BorderSize = 0;
             btnSave.FlatStyle = FlatStyle.Flat;
             btnSave.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnSave.ForeColor = Color.White;
-            btnSave.Location = new Point(120, 260);
+            btnSave.Location = new Point(240, 260);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(100, 30);
             btnSave.TabIndex = 12;
             btnSave.Text = "Save";
             btnSave.UseVisualStyleBackColor = false;
-            btnSave.UseWaitCursor = true;
+            btnSave.FlatAppearance.MouseOverBackColor = Color.FromArgb(25, 118, 210);
             btnSave.Click += btnSave_Click_1;
             // 
             // txtConfirmPassword
             // 
-            txtConfirmPassword.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            txtConfirmPassword.Location = new Point(149, 216);
+            txtConfirmPassword.Anchor = AnchorStyles.None;
+            txtConfirmPassword.BackColor = Color.FromArgb(245, 245, 245);
+            txtConfirmPassword.BorderStyle = BorderStyle.FixedSingle;
+            txtConfirmPassword.Font = new Font("Segoe UI", 10F);
+            txtConfirmPassword.ForeColor = Color.DimGray;
+            txtConfirmPassword.Location = new Point(130, 225);
             txtConfirmPassword.Name = "txtConfirmPassword";
             txtConfirmPassword.PasswordChar = '*';
-            txtConfirmPassword.Size = new Size(300, 23);
+            txtConfirmPassword.PlaceholderText = "Confirm your password";
+            txtConfirmPassword.Size = new Size(400, 25);
             txtConfirmPassword.TabIndex = 11;
-            txtConfirmPassword.UseWaitCursor = true;
             // 
             // lblConfirmPassword
             // 
-            lblConfirmPassword.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lblConfirmPassword.AutoSize = true;
             lblConfirmPassword.Font = new Font("Segoe UI", 10F);
-            lblConfirmPassword.Location = new Point(20, 220);
+            lblConfirmPassword.ForeColor = Color.DimGray;
+            lblConfirmPassword.Location = new Point(15, 225);
             lblConfirmPassword.Name = "lblConfirmPassword";
             lblConfirmPassword.Size = new Size(123, 19);
             lblConfirmPassword.TabIndex = 10;
             lblConfirmPassword.Text = "Confirm Password:";
-            lblConfirmPassword.UseWaitCursor = true;
             // 
             // txtPassword
             // 
-            txtPassword.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            txtPassword.Location = new Point(120, 180);
+            txtPassword.Anchor = AnchorStyles.None;
+            txtPassword.BackColor = Color.FromArgb(245, 245, 245);
+            txtPassword.BorderStyle = BorderStyle.FixedSingle;
+            txtPassword.Font = new Font("Segoe UI", 10F);
+            txtPassword.ForeColor = Color.DimGray;
+            txtPassword.Location = new Point(130, 190);
             txtPassword.Name = "txtPassword";
             txtPassword.PasswordChar = '*';
-            txtPassword.Size = new Size(300, 23);
+            txtPassword.PlaceholderText = "Enter your password";
+            txtPassword.Size = new Size(400, 25);
             txtPassword.TabIndex = 9;
-            txtPassword.UseWaitCursor = true;
             // 
             // lblPassword
             // 
-            lblPassword.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lblPassword.AutoSize = true;
             lblPassword.Font = new Font("Segoe UI", 10F);
-            lblPassword.Location = new Point(20, 180);
+            lblPassword.ForeColor = Color.DimGray;
+            lblPassword.Location = new Point(15, 190);
             lblPassword.Name = "lblPassword";
             lblPassword.Size = new Size(70, 19);
             lblPassword.TabIndex = 8;
             lblPassword.Text = "Password:";
-            lblPassword.UseWaitCursor = true;
             // 
             // txtContact
             // 
-            txtContact.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            txtContact.Location = new Point(120, 140);
+            txtContact.Anchor = AnchorStyles.None;
+            txtContact.BackColor = Color.FromArgb(245, 245, 245);
+            txtContact.BorderStyle = BorderStyle.FixedSingle;
+            txtContact.Font = new Font("Segoe UI", 10F);
+            txtContact.ForeColor = Color.DimGray;
+            txtContact.Location = new Point(130, 155);
             txtContact.Name = "txtContact";
-            txtContact.Size = new Size(300, 23);
+            txtContact.PlaceholderText = "Enter your contact number";
+            txtContact.Size = new Size(400, 25);
             txtContact.TabIndex = 7;
-            txtContact.UseWaitCursor = true;
             // 
             // lblContact
             // 
-            lblContact.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lblContact.AutoSize = true;
             lblContact.Font = new Font("Segoe UI", 10F);
-            lblContact.Location = new Point(20, 140);
+            lblContact.ForeColor = Color.DimGray;
+            lblContact.Location = new Point(15, 155);
             lblContact.Name = "lblContact";
             lblContact.Size = new Size(60, 19);
             lblContact.TabIndex = 6;
             lblContact.Text = "Contact:";
-            lblContact.UseWaitCursor = true;
             // 
             // txtAddress
             // 
-            txtAddress.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            txtAddress.Location = new Point(120, 100);
+            txtAddress.Anchor = AnchorStyles.None;
+            txtAddress.BackColor = Color.FromArgb(245, 245, 245);
+            txtAddress.BorderStyle = BorderStyle.FixedSingle;
+            txtAddress.Font = new Font("Segoe UI", 10F);
+            txtAddress.ForeColor = Color.DimGray;
+            txtAddress.Location = new Point(130, 120);
             txtAddress.Name = "txtAddress";
-            txtAddress.Size = new Size(300, 23);
+            txtAddress.PlaceholderText = "Enter your address";
+            txtAddress.Size = new Size(400, 25);
             txtAddress.TabIndex = 5;
-            txtAddress.UseWaitCursor = true;
             // 
             // lblAddress
             // 
-            lblAddress.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lblAddress.AutoSize = true;
             lblAddress.Font = new Font("Segoe UI", 10F);
-            lblAddress.Location = new Point(20, 100);
+            lblAddress.ForeColor = Color.DimGray;
+            lblAddress.Location = new Point(15, 120);
             lblAddress.Name = "lblAddress";
             lblAddress.Size = new Size(61, 19);
             lblAddress.TabIndex = 4;
             lblAddress.Text = "Address:";
-            lblAddress.UseWaitCursor = true;
             // 
             // txtEmail
             // 
-            txtEmail.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            txtEmail.Location = new Point(120, 60);
+            txtEmail.Anchor = AnchorStyles.None;
+            txtEmail.BackColor = Color.FromArgb(245, 245, 245);
+            txtEmail.BorderStyle = BorderStyle.FixedSingle;
+            txtEmail.Font = new Font("Segoe UI", 10F);
+            txtEmail.ForeColor = Color.DimGray;
+            txtEmail.Location = new Point(130, 85);
             txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(300, 23);
+            txtEmail.PlaceholderText = "Enter your email";
+            txtEmail.Size = new Size(400, 25);
             txtEmail.TabIndex = 3;
-            txtEmail.UseWaitCursor = true;
             // 
             // lblEmail
             // 
-            lblEmail.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lblEmail.AutoSize = true;
             lblEmail.Font = new Font("Segoe UI", 10F);
-            lblEmail.Location = new Point(20, 60);
+            lblEmail.ForeColor = Color.DimGray;
+            lblEmail.Location = new Point(15, 85);
             lblEmail.Name = "lblEmail";
             lblEmail.Size = new Size(44, 19);
             lblEmail.TabIndex = 2;
             lblEmail.Text = "Email:";
-            lblEmail.UseWaitCursor = true;
             // 
             // txtUsername
             // 
-            txtUsername.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            txtUsername.Location = new Point(120, 20);
+            txtUsername.Anchor = AnchorStyles.None;
+            txtUsername.BackColor = Color.FromArgb(245, 245, 245);
+            txtUsername.BorderStyle = BorderStyle.FixedSingle;
+            txtUsername.Font = new Font("Segoe UI", 10F);
+            txtUsername.ForeColor = Color.DimGray;
+            txtUsername.Location = new Point(130, 50);
             txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(300, 23);
+            txtUsername.PlaceholderText = "Enter your username";
+            txtUsername.Size = new Size(400, 25);
             txtUsername.TabIndex = 1;
-            txtUsername.UseWaitCursor = true;
             // 
             // lblUsername
             // 
-            lblUsername.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lblUsername.AutoSize = true;
             lblUsername.Font = new Font("Segoe UI", 10F);
-            lblUsername.Location = new Point(20, 20);
+            lblUsername.ForeColor = Color.DimGray;
+            lblUsername.Location = new Point(15, 50);
             lblUsername.Name = "lblUsername";
             lblUsername.Size = new Size(74, 19);
             lblUsername.TabIndex = 0;
             lblUsername.Text = "Username:";
-            lblUsername.UseWaitCursor = true;
             // 
             // EditProfiles
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.White;
-            ClientSize = new Size(800, 450);
+            BackColor = Color.FromArgb(245, 245, 245); // Modern light background
+            ClientSize = new Size(600, 370);
             Controls.Add(panelForm);
             Controls.Add(panelHeader);
             Name = "EditProfiles";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Edit Profile";
-            WindowState = FormWindowState.Maximized;
+            WindowState = FormWindowState.Normal;
             Load += EditProfiles_Load;
             panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
             panelForm.ResumeLayout(false);
             panelForm.PerformLayout();
             ResumeLayout(false);
-
         }
 
         #endregion

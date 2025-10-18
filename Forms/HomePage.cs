@@ -10,7 +10,7 @@ namespace IT13_Final_Project.Forms
     public partial class HomePage : Form
     {
         private string connectionString =
-           "Server=LUPIN\\SQLEXPRESS;Initial Catalog=IT13;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+            "Data Source=LUPIN\\SQLEXPRESS;Initial Catalog=IT13;Integrated Security=True;Pooling=False;Encrypt=True;Trust Server Certificate=True";
 
         private int _userId; // ✅ User session
         public static Panel MainPanel;
@@ -32,6 +32,14 @@ namespace IT13_Final_Project.Forms
             InitializeComponent();
             MessageBox.Show("Error: User session not found. Please re-login.", "Invalid Access", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             this.Close();
+        }
+
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+            // Automatically refresh when form is activated
+            LoadNewlyAddedBooks();
+            LoadTopBooks();
         }
 
         // ✅ Load Newly Added Books (with dynamic rating from BookReviews)
@@ -121,8 +129,8 @@ namespace IT13_Final_Project.Forms
             bool available = reader["IsAvailable"] != DBNull.Value && (bool)reader["IsAvailable"];
             int rating = reader["AvgRating"] != DBNull.Value ? Convert.ToInt32(Math.Round(Convert.ToDouble(reader["AvgRating"]))) : 0;
 
-            // Load image
-            Image cover = null;
+            // Load book image safely
+            Image cover = Properties.Resources.noimage; // fallback
             try
             {
                 if (!(reader["BookImage"] is DBNull))
@@ -132,72 +140,84 @@ namespace IT13_Final_Project.Forms
                         cover = Image.FromFile(imgPath);
                 }
             }
-            catch { cover = null; }
+            catch { }
 
-            // ✅ Build book card
+            // 🟫 Card style (medium)
             Panel bookPanel = new Panel
             {
-                BackColor = Color.NavajoWhite,
-                Size = new Size(160, 240),
-                Margin = new Padding(10),
+                Width = 220,
+                Height = 300,
+                BackColor = Color.FromArgb(245, 236, 220), // soft cream background
+                Margin = new Padding(9),
                 BorderStyle = BorderStyle.FixedSingle,
                 Tag = bookId
             };
 
+            // 🖼️ Image
             PictureBox pb = new PictureBox
             {
                 Image = cover,
-                SizeMode = PictureBoxSizeMode.StretchImage,
-                Size = new Size(140, 140),
-                Location = new Point(10, 10),
-                BackColor = Color.LightGray,
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Size = new Size(220, 160),
+                Location = new Point(0, 0),
+                BackColor = Color.White,
                 Cursor = Cursors.Hand,
                 Tag = bookId
             };
             pb.Click += Book_Click;
             bookPanel.Controls.Add(pb);
 
+            // 📖 Title
             Label lblTitle = new Label
             {
                 Text = title,
-                Location = new Point(10, 155),
-                AutoSize = true,
-                Font = new Font("Segoe UI", 9F, FontStyle.Bold),
-                ForeColor = Color.Black,
-                MaximumSize = new Size(140, 0)
+                Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                Size = new Size(200, 25),
+                Location = new Point(10, 170),
+                TextAlign = ContentAlignment.MiddleCenter,
+                ForeColor = Color.Black
             };
             lblTitle.Click += Book_Click;
             bookPanel.Controls.Add(lblTitle);
 
-            Label lblAvail = new Label
-            {
-                Text = available ? "Available" : "Unavailable",
-                Location = new Point(10, 175),
-                AutoSize = true,
-                ForeColor = available ? Color.Green : Color.Red
-            };
-            bookPanel.Controls.Add(lblAvail);
-
+            // 🟡 Rating
             Label lblRating = new Label
             {
                 Text = $"⭐ {rating}/5",
+                Font = new Font("Segoe UI", 9F, FontStyle.Regular),
+                Size = new Size(200, 20),
                 Location = new Point(10, 195),
-                AutoSize = true,
+                TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = Color.DarkGoldenrod
             };
             bookPanel.Controls.Add(lblRating);
 
+            // ✅ Availability
+            Label lblAvail = new Label
+            {
+                Text = available ? "Available" : "Not Available",
+                Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                Size = new Size(200, 20),
+                Location = new Point(10, 215),
+                TextAlign = ContentAlignment.MiddleCenter,
+                ForeColor = available ? Color.ForestGreen : Color.Red
+            };
+            bookPanel.Controls.Add(lblAvail);
+
+            // ☕ Borrow Button
             Button btnBorrow = new Button
             {
-                Text = "Borrow",
-                Size = new Size(70, 25),
-                Location = new Point(80, 210),
-                BackColor = Color.Peru,
+                Text = "View Detail",
+                Size = new Size(200, 30),
+                Location = new Point((bookPanel.Width - 200) / 2, 250), // centered button
+                BackColor = Color.FromArgb(120, 63, 4), // coffee brown
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
+                Font = new Font("Segoe UI", 9F, FontStyle.Bold),
                 Tag = bookId,
-                Enabled = available
+                Cursor = Cursors.Hand
             };
+            btnBorrow.FlatAppearance.BorderSize = 0;
             btnBorrow.Click += Book_Click;
             bookPanel.Controls.Add(btnBorrow);
 
