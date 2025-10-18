@@ -27,8 +27,14 @@ namespace IT13_Final_Project.Forms
             _bookId = bookId;
             _userId = userId;
 
-            btnBorrow.Click += BtnBorrow_Click;
+            btnReserve.Click += BtnReserve_Click;
             btnFavorite.Click += BtnFavorite_Click;
+        }
+
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+            LoadBook(_bookId); // Automatically reload book data when form is activated
         }
 
         private void Book_Load(object sender, EventArgs e)
@@ -78,9 +84,7 @@ namespace IT13_Final_Project.Forms
 
                             int avgRating = GetAverageRating(bookId);
 
-                            SetBookInfo(title, author, description, imagePath, avgRating);
-                            btnBorrow.Enabled = isAvailable;
-                            if (!isAvailable) btnBorrow.Text = "Unavailable";
+                            SetBookInfo(title, author, description, imagePath, avgRating, isAvailable);
                         }
                         else
                         {
@@ -95,7 +99,33 @@ namespace IT13_Final_Project.Forms
             }
         }
 
-        // ✅ FIXED: Use BookReviews instead of Ratings
+        private void SetBookInfo(string title, string author, string description, string imagePath, int rating, bool isAvailable)
+        {
+            lblTitle.Text = title;
+            lblAuthor.Text = $"by {author}";
+            txtDescription.Text = description;
+
+            // Show stars (⭐) up to 5
+            rating = Math.Max(0, Math.Min(rating, 5));
+            lblRating.Text = new string('⭐', rating) + $" ({rating}/5)";
+
+            if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
+            {
+                using (var imgTemp = Image.FromFile(imagePath))
+                {
+                    pictureBoxCover.Image = new Bitmap(imgTemp);
+                }
+            }
+            else
+            {
+                pictureBoxCover.Image = null;
+            }
+
+            // Update reserve button based on availability
+            btnReserve.Enabled = isAvailable;
+            btnReserve.Text = isAvailable ? "Reserve" : "Unavailable";
+        }
+
         private int GetAverageRating(int bookId)
         {
             try
@@ -124,32 +154,9 @@ namespace IT13_Final_Project.Forms
             return 0;
         }
 
-        private void SetBookInfo(string title, string author, string description, string imagePath, int rating)
-        {
-            lblTitle.Text = title;
-            lblAuthor.Text = $"by {author}";
-            txtDescription.Text = description;
+        private void BtnReserve_Click(object sender, EventArgs e) => ReserveBook();
 
-            // Show stars (⭐) up to 5
-            rating = Math.Max(0, Math.Min(rating, 5));
-            lblRating.Text = new string('⭐', rating) + $" ({rating}/5)";
-
-            if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
-            {
-                using (var imgTemp = Image.FromFile(imagePath))
-                {
-                    pictureBoxCover.Image = new Bitmap(imgTemp);
-                }
-            }
-            else
-            {
-                pictureBoxCover.Image = null;
-            }
-        }
-
-        private void BtnBorrow_Click(object sender, EventArgs e) => BorrowBook();
-
-        private void BorrowBook()
+        private void ReserveBook()
         {
             try
             {
@@ -157,9 +164,9 @@ namespace IT13_Final_Project.Forms
                 {
                     conn.Open();
 
-                    string borrowQuery = @"INSERT INTO BorrowedBooks (UserID, BookID, BorrowDate, DueDate, FineAmount)
-                                           VALUES (@UserID, @BookID, GETDATE(), DATEADD(DAY, 14, GETDATE()), 0)";
-                    using (SqlCommand cmd = new SqlCommand(borrowQuery, conn))
+                    string reserveQuery = @"INSERT INTO Reservations (UserID, BookID, ReservationDate, Status)
+                                            VALUES (@UserID, @BookID, GETDATE(), 'Reserved')";
+                    using (SqlCommand cmd = new SqlCommand(reserveQuery, conn))
                     {
                         cmd.Parameters.AddWithValue("@UserID", _userId);
                         cmd.Parameters.AddWithValue("@BookID", _bookId);
@@ -173,14 +180,13 @@ namespace IT13_Final_Project.Forms
                         cmd.ExecuteNonQuery();
                     }
 
-                    MessageBox.Show("Book borrowed successfully!");
-                    btnBorrow.Enabled = false;
-                    btnBorrow.Text = "Borrowed";
+                    MessageBox.Show("Book reserved successfully!");
+                    LoadBook(_bookId); // Refresh the book details
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error borrowing book: " + ex.Message);
+                MessageBox.Show("Error reserving book: " + ex.Message);
             }
         }
 
@@ -275,7 +281,6 @@ namespace IT13_Final_Project.Forms
             }
         }
 
-        // ✅ FIXED: Use BookReviews + correct column names
         private void LoadReviews(int bookId)
         {
             reviewsPanel.Controls.Clear();
@@ -305,7 +310,7 @@ namespace IT13_Final_Project.Forms
 
                             Panel reviewBox = new Panel
                             {
-                                Width = reviewsPanel.Width - 25,
+                                Width = reviewsPanel.Width - 10,
                                 Height = 70,
                                 BackColor = Color.Beige,
                                 Margin = new Padding(5)

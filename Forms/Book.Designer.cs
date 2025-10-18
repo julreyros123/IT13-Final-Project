@@ -34,7 +34,7 @@
             txtDescription = new TextBox();
             lblRating = new Label();
             btnFavorite = new Button();
-            btnBorrow = new Button();
+            btnReserve = new Button();
             panelDetails = new Panel();
             lblReviewsHeader = new Label();
             reviewsPanel = new FlowLayoutPanel();
@@ -59,31 +59,36 @@
             // lblTitle
             // 
             lblTitle.AutoSize = true;
-            lblTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            lblTitle.Location = new Point(20, 20);
+            lblTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            lblTitle.Location = new Point(20, 5);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(0, 25);
+            lblTitle.Size = new Size(0, 32);
             lblTitle.TabIndex = 1;
             // 
             // lblAuthor
             // 
             lblAuthor.AutoSize = true;
-            lblAuthor.Font = new Font("Segoe UI", 10F, FontStyle.Italic);
-            lblAuthor.ForeColor = Color.DimGray;
-            lblAuthor.Location = new Point(20, 55);
+            lblAuthor.Font = new Font("Segoe UI", 15F, FontStyle.Italic);
+            lblAuthor.ForeColor = Color.Black;
+            lblAuthor.Location = new Point(20, 40);
             lblAuthor.Name = "lblAuthor";
-            lblAuthor.Size = new Size(0, 19);
+            lblAuthor.Size = new Size(0, 28);
             lblAuthor.TabIndex = 2;
             // 
             // txtDescription
             // 
+            txtDescription.BackColor = Color.White;
             txtDescription.BorderStyle = BorderStyle.None;
+            txtDescription.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtDescription.Location = new Point(20, 100);
             txtDescription.Multiline = true;
             txtDescription.Name = "txtDescription";
+            txtDescription.PlaceholderText = "There is no description on this book";
             txtDescription.ReadOnly = true;
-            txtDescription.Size = new Size(463, 161);
+            txtDescription.Size = new Size(553, 161);
             txtDescription.TabIndex = 3;
+            txtDescription.TabStop = false;
+            txtDescription.UseWaitCursor = true;
             // 
             // lblRating
             // 
@@ -97,7 +102,7 @@
             // 
             // btnFavorite
             // 
-            btnFavorite.BackColor = Color.Peru;
+            btnFavorite.BackColor = Color.DodgerBlue;
             btnFavorite.FlatStyle = FlatStyle.Flat;
             btnFavorite.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnFavorite.ForeColor = Color.White;
@@ -108,28 +113,28 @@
             btnFavorite.Text = "Add to Favorites";
             btnFavorite.UseVisualStyleBackColor = false;
             // 
-            // btnBorrow
+            // btnReserve
             // 
-            btnBorrow.BackColor = Color.Peru;
-            btnBorrow.FlatStyle = FlatStyle.Flat;
-            btnBorrow.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnBorrow.ForeColor = Color.White;
-            btnBorrow.Location = new Point(340, 310);
-            btnBorrow.Name = "btnBorrow";
-            btnBorrow.Size = new Size(150, 30);
-            btnBorrow.TabIndex = 6;
-            btnBorrow.Text = "Borrow Book";
-            btnBorrow.UseVisualStyleBackColor = false;
+            btnReserve.BackColor = Color.DodgerBlue;
+            btnReserve.FlatStyle = FlatStyle.Flat;
+            btnReserve.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnReserve.ForeColor = Color.White;
+            btnReserve.Location = new Point(340, 310);
+            btnReserve.Name = "btnReserve";
+            btnReserve.Size = new Size(150, 30);
+            btnReserve.TabIndex = 6;
+            btnReserve.Text = "Reserve Book";
+            btnReserve.UseVisualStyleBackColor = false;
             // 
             // panelDetails
             // 
             panelDetails.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panelDetails.BackColor = Color.NavajoWhite;
+            panelDetails.BackColor = Color.LightGray;
             panelDetails.BorderStyle = BorderStyle.FixedSingle;
             panelDetails.Controls.Add(lblReviewsHeader);
             panelDetails.Controls.Add(reviewsPanel);
             panelDetails.Controls.Add(lblDescription);
-            panelDetails.Controls.Add(btnBorrow);
+            panelDetails.Controls.Add(btnReserve);
             panelDetails.Controls.Add(btnFavorite);
             panelDetails.Controls.Add(lblRating);
             panelDetails.Controls.Add(txtDescription);
@@ -137,7 +142,7 @@
             panelDetails.Controls.Add(lblTitle);
             panelDetails.Location = new Point(280, 100);
             panelDetails.Name = "panelDetails";
-            panelDetails.Size = new Size(555, 600);
+            panelDetails.Size = new Size(586, 600);
             panelDetails.TabIndex = 7;
             // 
             // lblReviewsHeader
@@ -153,11 +158,11 @@
             // reviewsPanel
             // 
             reviewsPanel.AutoScroll = true;
-            reviewsPanel.BackColor = Color.WhiteSmoke;
+            reviewsPanel.BackColor = Color.White;
             reviewsPanel.FlowDirection = FlowDirection.TopDown;
-            reviewsPanel.Location = new Point(20, 390);
+            reviewsPanel.Location = new Point(20, 384);
             reviewsPanel.Name = "reviewsPanel";
-            reviewsPanel.Size = new Size(510, 180);
+            reviewsPanel.Size = new Size(553, 180);
             reviewsPanel.TabIndex = 10;
             reviewsPanel.WrapContents = false;
             reviewsPanel.Paint += reviewsPanel_Paint;
@@ -175,12 +180,12 @@
             // 
             // panelHeader
             // 
-            panelHeader.BackColor = Color.FromArgb(128, 64, 0);
+            panelHeader.BackColor = Color.DodgerBlue;
             panelHeader.Controls.Add(lblBookDetails);
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(0, 0);
             panelHeader.Name = "panelHeader";
-            panelHeader.Size = new Size(819, 60);
+            panelHeader.Size = new Size(866, 60);
             panelHeader.TabIndex = 8;
             // 
             // lblBookDetails
@@ -199,14 +204,13 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(819, 720);
+            ClientSize = new Size(866, 720);
             Controls.Add(panelHeader);
             Controls.Add(panelDetails);
             Controls.Add(pictureBoxCover);
             Name = "Book";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Book Details";
-            WindowState = FormWindowState.Maximized;
             Load += Book_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBoxCover).EndInit();
             panelDetails.ResumeLayout(false);
@@ -217,7 +221,6 @@
 
         }
 
-
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBoxCover;
@@ -226,7 +229,7 @@
         private System.Windows.Forms.TextBox txtDescription;
         private System.Windows.Forms.Label lblRating;
         private System.Windows.Forms.Button btnFavorite;
-        private System.Windows.Forms.Button btnBorrow;
+        private System.Windows.Forms.Button btnReserve;
         private System.Windows.Forms.Panel panelDetails;
         private System.Windows.Forms.Label lblDescription;
         private System.Windows.Forms.Panel panelHeader;
@@ -240,6 +243,5 @@
         private System.Windows.Forms.TextBox txtReview;
         private System.Windows.Forms.NumericUpDown numRating;
         private System.Windows.Forms.Button btnSubmitReview;
-
     }
 }

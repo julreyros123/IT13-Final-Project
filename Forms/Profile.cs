@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Data.SqlClient;
 
@@ -28,7 +23,7 @@ namespace IT13_Final_Project.Forms
             _userId = userId;
         }
 
-        private void Profile_Load_2(object sender, EventArgs e)
+        private void Profile_Load_2(object sender, EventArgs e) // Matches designer
         {
             if (_userId > 0)
             {
@@ -77,46 +72,47 @@ namespace IT13_Final_Project.Forms
                             }
                             else
                             {
-                                MessageBox.Show("No user data found for this ID.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                MessageBox.Show($"No user data found for UserID: {userId}. Check the Users table.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 return;
                             }
                         }
                     }
 
                     // 🔹 Now load the dynamic statistics
-                    // 1️⃣ Total Books
-                    string totalBooksQuery = "SELECT COUNT(*) FROM Books";
-                    using (SqlCommand cmd = new SqlCommand(totalBooksQuery, conn))
+                    // 1️⃣ Total Reservations
+                    string totalReservationsQuery = "SELECT COUNT(*) FROM Reservations WHERE UserID = @UserID";
+                    using (SqlCommand cmd = new SqlCommand(totalReservationsQuery, conn))
                     {
-                        int totalBooks = Convert.ToInt32(cmd.ExecuteScalar());
-                        textBox5.Text = totalBooks.ToString(); // Total Books
+                        cmd.Parameters.AddWithValue("@UserID", userId);
+                        int totalReservations = Convert.ToInt32(cmd.ExecuteScalar() ?? 0); // Handle null
+                        textBox5.Text = totalReservations.ToString();
                     }
 
-                    // 2️⃣ Books currently borrowed by this user
-                    string borrowedQuery = "SELECT COUNT(*) FROM BorrowedBooks WHERE UserID = @UserID AND ReturnDate IS NULL";
-                    using (SqlCommand cmd = new SqlCommand(borrowedQuery, conn))
+                    // 2️⃣ Reservations currently held
+                    string reservedQuery = "SELECT COUNT(*) FROM Reservations WHERE UserID = @UserID AND ReturnDate IS NULL";
+                    using (SqlCommand cmd = new SqlCommand(reservedQuery, conn))
                     {
-                        cmd.Parameters.AddWithValue("@UserID", _userId);
-                        int borrowedCount = Convert.ToInt32(cmd.ExecuteScalar());
-                        textBox8.Text = borrowedCount.ToString(); // Currently Borrowed
+                        cmd.Parameters.AddWithValue("@UserID", userId);
+                        int reservedCount = Convert.ToInt32(cmd.ExecuteScalar() ?? 0); // Handle null
+                        textBox8.Text = reservedCount.ToString();
                     }
 
-                    // 3️⃣ Overdue Books
-                    string overdueQuery = "SELECT COUNT(*) FROM BorrowedBooks WHERE UserID = @UserID AND DueDate < GETDATE() AND ReturnDate IS NULL";
+                    // 3️⃣ Overdue Reservations
+                    string overdueQuery = "SELECT COUNT(*) FROM Reservations WHERE UserID = @UserID AND DueDate < GETDATE() AND ReturnDate IS NULL";
                     using (SqlCommand cmd = new SqlCommand(overdueQuery, conn))
                     {
-                        cmd.Parameters.AddWithValue("@UserID", _userId);
-                        int overdueCount = Convert.ToInt32(cmd.ExecuteScalar());
-                        textBox6.Text = overdueCount.ToString(); // Overdue Books
+                        cmd.Parameters.AddWithValue("@UserID", userId);
+                        int overdueCount = Convert.ToInt32(cmd.ExecuteScalar() ?? 0); // Handle null
+                        textBox6.Text = overdueCount.ToString();
                     }
 
                     // 4️⃣ Fines Due
-                    string finesQuery = "SELECT ISNULL(SUM(FineAmount), 0) FROM BorrowedBooks WHERE UserID = @UserID";
+                    string finesQuery = "SELECT ISNULL(SUM(FineAmount), 0) FROM Reservations WHERE UserID = @UserID AND FineAmount > 0";
                     using (SqlCommand cmd = new SqlCommand(finesQuery, conn))
                     {
-                        cmd.Parameters.AddWithValue("@UserID", _userId);
-                        decimal finesDue = Convert.ToDecimal(cmd.ExecuteScalar());
-                        textBox9.Text = finesDue.ToString("0.00"); // Fines Due
+                        cmd.Parameters.AddWithValue("@UserID", userId);
+                        decimal finesDue = Convert.ToDecimal(cmd.ExecuteScalar()); // No null check needed due to ISNULL
+                        textBox9.Text = finesDue.ToString("0.00");
                     }
 
                     MakeTextboxesReadOnly();
@@ -124,7 +120,7 @@ namespace IT13_Final_Project.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error loading user data: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error loading user data: {ex.Message}\nStack Trace: {ex.StackTrace}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -145,23 +141,33 @@ namespace IT13_Final_Project.Forms
         }
 
         // ✅ Log out button
-        private void button2_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            Login loginForm = new Login();
-            loginForm.Show();
-        }
+
 
         // ✅ Edit profile button
         private void button1_Click(object sender, EventArgs e)
         {
             EditProfiles editForm = new EditProfiles(_userId);
-            this.Hide();
             editForm.Show();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e) { }
         private void textBox7_TextChanged(object sender, EventArgs e) { }
         private void textBox10_TextChanged(object sender, EventArgs e) { }
+
+        // Example: Show Profile as a layer in a parent panel (e.g., Dashboard.MainPanel)
+        public void ShowAsLayer(int userId)
+        {
+            var profileLayer = new Profile(userId);
+            profileLayer.TopLevel = false;
+            profileLayer.Dock = DockStyle.Fill;
+            Dashboard.MainPanel.Controls.Clear();
+            Dashboard.MainPanel.Controls.Add(profileLayer);
+            profileLayer.Show();
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+            // Empty handler, can be removed if not needed
+        }
     }
 }

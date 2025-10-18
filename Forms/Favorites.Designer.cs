@@ -28,51 +28,57 @@
         /// </summary>
         private void InitializeComponent()
         {
+            Label label2;
             panel2 = new Panel();
-            label2 = new Label();
             flowLayoutPanel1 = new FlowLayoutPanel();
+            label2 = new Label();
             panel2.SuspendLayout();
             SuspendLayout();
-            // 
-            // panel2
-            // 
-            panel2.BackColor = Color.BurlyWood;
-            panel2.Controls.Add(label2);
-            panel2.Dock = DockStyle.Top;
-            panel2.Location = new Point(0, 0);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(1312, 83);
-            panel2.TabIndex = 3;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Microsoft New Tai Lue", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.ForeColor = Color.FromArgb(128, 64, 0);
-            label2.Location = new Point(528, 22);
+            label2.BackColor = Color.DodgerBlue;
+            label2.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(477, 5);
             label2.Name = "label2";
-            label2.Size = new Size(158, 35);
+            label2.Size = new Size(215, 45);
             label2.TabIndex = 0;
-            label2.Text = "FAVORITES";
+            label2.Text = "⭐FAVORITES";
+            // 
+            // panel2
+            // 
+            panel2.BackColor = Color.DodgerBlue;
+            panel2.Controls.Add(label2);
+            panel2.Dock = DockStyle.Top;
+            panel2.Location = new Point(0, 0);
+            panel2.Name = "panel2";
+            panel2.Padding = new Padding(0, 10, 0, 10);
+            panel2.Size = new Size(1312, 60);
+            panel2.TabIndex = 3;
             // 
             // flowLayoutPanel1
             // 
-            flowLayoutPanel1.Anchor = AnchorStyles.Left;
+            flowLayoutPanel1.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             flowLayoutPanel1.AutoScroll = true;
-            flowLayoutPanel1.BackColor = Color.Chocolate;
-            flowLayoutPanel1.Location = new Point(137, 125);
+            flowLayoutPanel1.BackColor = Color.White;
+            flowLayoutPanel1.Location = new Point(0, 60);
+            flowLayoutPanel1.Margin = new Padding(20, 5, 20, 5);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(1030, 481);
+            flowLayoutPanel1.Padding = new Padding(10, 5, 30, 5);
+            flowLayoutPanel1.Size = new Size(1312, 570);
             flowLayoutPanel1.TabIndex = 4;
-            flowLayoutPanel1.Scroll += flowLayoutPanel1_Scroll;
             // 
             // Favorites
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
             ClientSize = new Size(1312, 630);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(panel2);
+            MinimumSize = new Size(800, 600);
             Name = "Favorites";
             Text = "Favorites";
             WindowState = FormWindowState.Maximized;

@@ -31,7 +31,7 @@
             PictureBox pictureBox1;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Dashboard));
             panel1 = new Panel();
-            menuBtn = new Button();
+            Logout = new Button();
             label1 = new Label();
             button5 = new Button();
             button4 = new Button();
@@ -48,7 +48,7 @@
             // 
             pictureBox1.Anchor = AnchorStyles.None;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(12, 70);
+            pictureBox1.Location = new Point(15, 21);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(164, 153);
             pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -57,9 +57,9 @@
             // 
             // panel1
             // 
-            panel1.BackColor = Color.Tan;
+            panel1.BackColor = Color.FromArgb(240, 240, 240);
+            panel1.Controls.Add(Logout);
             panel1.Controls.Add(pictureBox1);
-            panel1.Controls.Add(menuBtn);
             panel1.Controls.Add(label1);
             panel1.Controls.Add(button5);
             panel1.Controls.Add(button4);
@@ -72,44 +72,45 @@
             panel1.Size = new Size(194, 749);
             panel1.TabIndex = 0;
             // 
-            // menuBtn
+            // Logout
             // 
-            menuBtn.AutoSize = true;
-            menuBtn.BackColor = Color.Tan;
-            menuBtn.Dock = DockStyle.Top;
-            menuBtn.FlatAppearance.BorderSize = 0;
-            menuBtn.FlatStyle = FlatStyle.Flat;
-            menuBtn.Image = (Image)resources.GetObject("menuBtn.Image");
-            menuBtn.Location = new Point(0, 0);
-            menuBtn.Name = "menuBtn";
-            menuBtn.Size = new Size(194, 32);
-            menuBtn.TabIndex = 7;
-            menuBtn.UseVisualStyleBackColor = false;
-            menuBtn.Click += menuBtn_Click;
+            Logout.BackColor = Color.Transparent;
+            Logout.FlatAppearance.BorderSize = 0;
+            Logout.FlatAppearance.MouseDownBackColor = Color.DeepSkyBlue;
+            Logout.FlatStyle = FlatStyle.Flat;
+            Logout.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            Logout.ForeColor = Color.DimGray;
+            Logout.ImageAlign = ContentAlignment.MiddleLeft;
+            Logout.Location = new Point(9, 696);
+            Logout.Name = "Logout";
+            Logout.Size = new Size(178, 41);
+            Logout.TabIndex = 10;
+            Logout.Text = "Logout";
+            Logout.UseVisualStyleBackColor = false;
+            Logout.Click += Logout_Click;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Times New Roman", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.FromArgb(128, 64, 0);
-            label1.Location = new Point(3, 226);
+            label1.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.DodgerBlue;
+            label1.Location = new Point(15, 201);
             label1.Name = "label1";
-            label1.Size = new Size(187, 24);
+            label1.Size = new Size(166, 25);
             label1.TabIndex = 2;
             label1.Text = "GRAND ARCHIVE";
             // 
             // button5
             // 
-            button5.BackColor = Color.Tan;
-            button5.FlatAppearance.BorderColor = Color.FromArgb(255, 128, 128);
+            button5.BackColor = Color.Transparent;
             button5.FlatAppearance.BorderSize = 0;
-            button5.FlatAppearance.MouseDownBackColor = Color.FromArgb(255, 128, 128);
+            button5.FlatAppearance.MouseDownBackColor = Color.DeepSkyBlue;
             button5.FlatStyle = FlatStyle.Flat;
-            button5.Font = new Font("Microsoft YaHei UI", 9.75F, FontStyle.Bold);
-            button5.ForeColor = Color.FromArgb(0, 0, 64);
+            button5.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            button5.ForeColor = Color.DimGray;
             button5.Image = (Image)resources.GetObject("button5.Image");
             button5.ImageAlign = ContentAlignment.MiddleLeft;
-            button5.Location = new Point(3, 441);
+            button5.Location = new Point(16, 516);
             button5.Name = "button5";
             button5.Size = new Size(175, 41);
             button5.TabIndex = 6;
@@ -119,16 +120,15 @@
             // 
             // button4
             // 
-            button4.BackColor = Color.Tan;
-            button4.FlatAppearance.BorderColor = Color.FromArgb(255, 128, 128);
+            button4.BackColor = Color.Transparent;
             button4.FlatAppearance.BorderSize = 0;
-            button4.FlatAppearance.MouseDownBackColor = Color.FromArgb(255, 128, 128);
+            button4.FlatAppearance.MouseDownBackColor = Color.DeepSkyBlue;
             button4.FlatStyle = FlatStyle.Flat;
-            button4.Font = new Font("Microsoft YaHei UI", 9.75F, FontStyle.Bold);
-            button4.ForeColor = Color.FromArgb(0, 0, 64);
+            button4.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            button4.ForeColor = Color.DimGray;
             button4.Image = (Image)resources.GetObject("button4.Image");
             button4.ImageAlign = ContentAlignment.MiddleLeft;
-            button4.Location = new Point(3, 394);
+            button4.Location = new Point(13, 449);
             button4.Name = "button4";
             button4.Size = new Size(178, 41);
             button4.TabIndex = 5;
@@ -138,35 +138,33 @@
             // 
             // button3
             // 
-            button3.BackColor = Color.Tan;
-            button3.FlatAppearance.BorderColor = Color.FromArgb(255, 128, 128);
+            button3.BackColor = Color.Transparent;
             button3.FlatAppearance.BorderSize = 0;
-            button3.FlatAppearance.MouseDownBackColor = Color.FromArgb(255, 128, 128);
+            button3.FlatAppearance.MouseDownBackColor = Color.DeepSkyBlue;
             button3.FlatStyle = FlatStyle.Flat;
-            button3.Font = new Font("Microsoft YaHei UI", 9.75F, FontStyle.Bold);
-            button3.ForeColor = Color.FromArgb(0, 0, 64);
+            button3.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            button3.ForeColor = Color.DimGray;
             button3.Image = (Image)resources.GetObject("button3.Image");
             button3.ImageAlign = ContentAlignment.MiddleLeft;
-            button3.Location = new Point(3, 347);
+            button3.Location = new Point(13, 385);
             button3.Name = "button3";
             button3.Size = new Size(178, 41);
             button3.TabIndex = 4;
-            button3.Text = "Borrowed ";
+            button3.Text = "Reserved";
             button3.UseVisualStyleBackColor = false;
             button3.Click += button3_Click;
             // 
             // button1
             // 
-            button1.BackColor = Color.Tan;
-            button1.FlatAppearance.BorderColor = Color.FromArgb(255, 128, 128);
+            button1.BackColor = Color.Transparent;
             button1.FlatAppearance.BorderSize = 0;
-            button1.FlatAppearance.MouseDownBackColor = Color.FromArgb(255, 128, 128);
+            button1.FlatAppearance.MouseDownBackColor = Color.DeepSkyBlue;
             button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Microsoft YaHei UI", 9.75F, FontStyle.Bold);
-            button1.ForeColor = Color.FromArgb(0, 0, 64);
+            button1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            button1.ForeColor = Color.DimGray;
             button1.Image = (Image)resources.GetObject("button1.Image");
             button1.ImageAlign = ContentAlignment.MiddleLeft;
-            button1.Location = new Point(3, 253);
+            button1.Location = new Point(10, 262);
             button1.Name = "button1";
             button1.Size = new Size(178, 41);
             button1.TabIndex = 2;
@@ -176,16 +174,15 @@
             // 
             // button2
             // 
-            button2.BackColor = Color.Tan;
-            button2.FlatAppearance.BorderColor = Color.FromArgb(255, 128, 128);
+            button2.BackColor = Color.Transparent;
             button2.FlatAppearance.BorderSize = 0;
-            button2.FlatAppearance.MouseDownBackColor = Color.FromArgb(255, 128, 128);
+            button2.FlatAppearance.MouseDownBackColor = Color.DeepSkyBlue;
             button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Microsoft YaHei UI", 9.75F, FontStyle.Bold);
-            button2.ForeColor = Color.FromArgb(0, 0, 64);
+            button2.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            button2.ForeColor = Color.DimGray;
             button2.Image = (Image)resources.GetObject("button2.Image");
             button2.ImageAlign = ContentAlignment.MiddleLeft;
-            button2.Location = new Point(3, 300);
+            button2.Location = new Point(12, 323);
             button2.Name = "button2";
             button2.Size = new Size(175, 41);
             button2.TabIndex = 3;
@@ -197,7 +194,7 @@
             // 
             // panel6
             // 
-            panel6.BackColor = Color.WhiteSmoke;
+            panel6.BackColor = Color.White;
             panel6.Dock = DockStyle.Fill;
             panel6.Location = new Point(194, 0);
             panel6.Name = "panel6";
@@ -208,7 +205,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.White;
+            BackColor = Color.WhiteSmoke;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(984, 749);
             Controls.Add(panel6);
@@ -235,7 +232,7 @@
         private Button button4;
         private Label label1;
         private Panel panel6;
-        private Button menuBtn;
         private PictureBox pictureBox1;
+        private Button Logout; // Added to class fields
     }
 }

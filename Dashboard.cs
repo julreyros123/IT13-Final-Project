@@ -16,7 +16,7 @@ namespace IT13_Final_Project
         private DataRow loggedInUser;
 
         private string connectionString =
-           "Data Source=LUPIN\\SQLEXPRESS;Initial Catalog=IT13;Integrated Security=True;Pooling=False;Encrypt=True;Trust Server Certificate=True";
+            "Data Source=LUPIN\\SQLEXPRESS;Initial Catalog=IT13;Integrated Security=True;Pooling=False;Encrypt=True;Trust Server Certificate=True";
 
         // ✅ Label fields for displaying user info
         private Label lblUsername = new Label();
@@ -139,7 +139,7 @@ namespace IT13_Final_Project
 
         private void button3_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new BorrowedBooks(_userId));
+            OpenChildForm(new ReservedBooks(_userId));
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -150,6 +150,21 @@ namespace IT13_Final_Project
         private void button5_Click(object sender, EventArgs e)
         {
             OpenChildForm(new Profile(_userId));
+        }
+
+
+        private void Logout_Click(object sender, EventArgs e)
+        {
+            // Logout logic with confirmation
+            DialogResult result = MessageBox.Show("Are you sure you want to logout?", "Confirm Logout",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                // Close the Dashboard, returning to the login screen
+                this.Close();
+                // Optionally, show the login form:
+                // Application.Run(new LoginForm()); // Replace with your login form
+            }
         }
 
         // ✅ Collapsible side menu
